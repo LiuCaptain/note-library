@@ -562,9 +562,38 @@
 
 27. #### 代理模式
 
-28. 
+    - 结构化储存代理模式
 
-29. 
+      `Proxy` 合约负责数据储存，`Logic` 合约负责数据的逻辑处理
+
+    - 非结构化储存代理模式
+
+      `Proxy` 合约负责代理处理，`Logic` 合约负责数据和逻辑处理
+
+    > **合约升级**是指在不改变合约地址和储存数据的前提下，替换执行逻辑。
+    >
+    > 其结构是这样的：`用户  →  Proxy（地址固定）  →  Implementation（逻辑可变）`
+
+28. #### library 合约的特点
+
+    - `library` 可以继承普通 `contract` 和其他 `library`
+    - `library` 可以实现 `interface`
+    - `library` 支持修饰器（`modifier`）
+    - `library` 的函数可见性通常是 `public`、`internal`（`external` 比较少见）
+    - `library` 不能有状态变量（`storage`）
+    - `library` 不支持构造函数，`constructor` 不会执行
+    - `library` 不能接收 ETH，因此也不支持 `fallback` 和 `receive`
+
+29. #### library 合约的调用方式
+
+    - `library` 包含 `public` 或 `external` 函数时，必须单独部署为一个合约，调用代码由编译器生成，并在运行时通过 `delegatecall` 执行，其地址是在部署时通过链接（linking）填充到调用合约的字节码中，而不是通过构造函数参数传入
+    - `library` 可见性为 `internal` 函数是通过编译时代码内联实现
+
+    > 库函数调用在语义上表现为内部调用（上下文不变），但在实现上：
+    >
+    > - `public` / `external` 函数通过 `delegatecall` 实现，会发生一次外部调用（`message call`）
+    >
+    > - `internal` 函数通过代码 `inline` 的方式实现
 
 30. 
 
