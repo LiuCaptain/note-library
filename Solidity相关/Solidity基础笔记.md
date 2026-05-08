@@ -586,14 +586,15 @@
 
 29. #### library 合约的调用方式
 
-    - `library` 包含 `public` 或 `external` 函数时，必须单独部署为一个合约，调用代码由编译器生成，并在运行时通过 `delegatecall` 执行，其地址是在部署时通过链接（linking）填充到调用合约的字节码中，而不是通过构造函数参数传入
-    - `library` 可见性为 `internal` 函数是通过编译时代码内联实现
+    - `library` 合约包含 `public` 或 `external` 函数时，必须单独部署为一个合约，调用代码由编译器生成，并在运行时通过 `delegatecall` 执行，其地址是在部署时通过链接（linking）填充到调用合约的字节码中，而不是通过构造函数参数传入
+    - `library` 合约可见性为 `internal` 函数是通过编译时代码内联实现
 
     > 库函数调用在语义上表现为内部调用（上下文不变），但在实现上：
     >
     > - `public` / `external` 函数通过 `delegatecall` 实现，会发生一次外部调用（`message call`）
     >
-    > - `internal` 函数通过代码 `inline` 的方式实现
+    > - `internal` 函数通过代码 `inline` 方式实现
+    >
 
 30. 
 
