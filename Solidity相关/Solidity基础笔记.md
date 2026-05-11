@@ -596,11 +596,77 @@
     > - `internal` 函数通过代码 `inline` 方式实现
     >
 
-30. 
+30. #### 抽象合约与接口
 
-31. 
+    | 特性                   | 抽象合约 (abstract contract) | 接口 (interface) |
+    | ---------------------- | ---------------------------- | ---------------- |
+    | 能否直接部署           | ❌ 不能                       | ❌ 不能           |
+    | 能否包含状态变量       | ✅ 可以                       | ❌ 不能           |
+    | 能否包含**未实现函数** | ✅ 可以                       | ✅ 全是未实现函数 |
+    | 能否包含**已实现函数** | ✅ 可以                       | ❌ 不能           |
+    | 能否被继承/实现        | ✅ 可以被继承                 | ✅ 可以被实现     |
+
+    > - 如果合约中有未实现的函数，该合约必须被标记为 `abstract`，且这些未实现的函数必须标记为 `virtual`，派生合约继承后必须实现这些函数，除非派生合约也是 `abstract`
+    >
+    > - `interface` 的本质是一个全是未实现函数的 `abstract` 合约
+    >
+    >   ```solidity
+    >   interface Base {
+    >   	function foo () external; // 默认就是 virtual 函数
+    >   }
+    >   // 等价于
+    >   abstract contract Base {
+    >   	function foo () external virtual // 显式标明 virtual 函数
+    >   }
+    >   ```
+    >
+    > - 接收 `storage` 参数的 `constructor`，该合约必须设置成 `abstract` 合约
+    >
+    >   ```solidity
+    >   abstract contract Base {
+    >   	constructor (string storage name) {}
+    >   }
+    >   contract A is Base {
+    >   	string public name;
+    >   	constructor () Base(name) {}
+    >   }
+    >   ```
+
+31. #### 合约继承中 Visibility 和 Mutability 的覆盖规则
+
+    - Visibility 规则
+
+      子合约函数覆盖父合约函数，子函数需要与父函数兼容
+
+      | 父函数     | 子函数允许            |
+      | ---------- | --------------------- |
+      | `private`  | ❌ 不可以 override     |
+      | `internal` | `internal`            |
+      | `external` | `external` / `public` |
+      | `public`   | `public`              |
+
+    - Mutability 规则
+
+      子合约函数覆盖父合约函数，子函数可以更严格，但不能更宽松
+
+      | 父函数             | 子函数允许             |
+      | ------------------ | ---------------------- |
+      | `payable`          | `payable`              |
+      | `pure`             | `pure`                 |
+      | `view`             | `view` / `pure`        |
+      | 普通（可修改状态） | 普通 / `view` / `pure` |
 
 32. 
+
+33. 
+
+34. 
+
+35. 
+
+36. 
+
+37. 
 
     
 
