@@ -155,7 +155,7 @@
 16. ##### 修改 Docker 容器名称
 
     ```bash
-    docker rename <CONTAINER> <NEW NAME>
+    docker container rename <CONTAINER> <NEW NAME>
     ```
 
 17. ##### 停止一个 Docker 容器
