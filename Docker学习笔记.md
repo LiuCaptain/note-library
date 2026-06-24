@@ -152,55 +152,61 @@
     docker container run --publish <宿主机端口>:<容器内端口> <IMAGE>
     ```
 
-16. ##### 停止一个 Docker 容器
+16. ##### 修改 Docker 容器名称
+
+    ```bash
+    docker rename <CONTAINER> <NEW NAME>
+    ```
+
+17. ##### 停止一个 Docker 容器
 
     ```bash
     docker container stop <CONTAINER>
     ```
 
-17. ##### 删除一个 Docker 容器
+18. ##### 删除一个 Docker 容器
 
     ```bash
     docker container rm <CONTAINER>
     ```
 
-18. ##### 强制删除一个 Docker 容器
+19. ##### 强制删除一个 Docker 容器
 
     ```bash
     docker container rm <CONTAINER> -f
     ```
 
-19. ##### 查询所有 Docker 容器的 id（包括正在运行和已经停止的容器）
+20. ##### 查询所有 Docker 容器的 id（包括正在运行和已经停止的容器）
 
     ```bash
     docker container ls -aq
     ```
 
-20. ##### 批量停止 Docker 容器
+21. ##### 批量停止 Docker 容器
 
     ```bash
     docker container stop <CONTAINER1> <CONTAINER2> <CONTAINER3>...
     ```
 
-21. ##### 停止所有 Docker 容器
+22. ##### 停止所有 Docker 容器
 
     ```bash
     docker container stop $(docker container ls -aq)
     ```
 
-22. ##### 批量删除 Docker 容器
+23. ##### 批量删除 Docker 容器
 
     ```bash
     docker container rm <CONTAINER1> <CONTAINER2> <CONTAINER3>...
     ```
 
-23. ##### 删除所有 Docker 容器
+24. ##### 删除所有 Docker 容器
 
     ```bash
     docker container rm $(docker container ls -aq)
     ```
 
-24. ##### Docker 容器的 attached 和 detached 模式
+25. ##### Docker 容器的 attached 和 detached 模式
 
     创建 Docker 容器默认是 attached 模式，attached 模式的容器是在前台运行，会把容器的输入输出结果反映到到本地的，比如访问服务会在命令行打印出访问日志；本地的输入输出也会反映到容器中去，比如输入 ctrl + c 会停止容器。但 detached 模式并不会有输入输出的反映
 
@@ -218,7 +224,7 @@
       docker container attach <CONTAINER>
       ```
 
-25. ##### 查看 Docker 容器日志
+26. ##### 查看 Docker 容器日志
 
     - 查看 Docker 容器日志
 
@@ -232,7 +238,7 @@
       docker container logs -f <CONTAINER>
       ```
 
-26. ##### 创建一个交互式运行的 Docker 容器
+27. ##### 创建一个交互式运行的 Docker 容器
 
     ```bash
     docker container run -it <IMAGE> <Command>
@@ -240,7 +246,7 @@
 
     当执行 `exit` 命令，这个交互式运行的容器会退出
 
-27. ##### 要可交互式的进入正在运行的 Docker 容器
+28. ##### 要可交互式的进入正在运行的 Docker 容器
 
     ```bash
     docker container exec -it <CONTAINER> <Command>
@@ -248,7 +254,7 @@
 
     当执行 `exit` 命令，这个运行的容器**不会**退出
 
-28. ##### 查询 Docker 容器启动了哪些进程
+29. ##### 查询 Docker 容器启动了哪些进程
 
     ```bash
     docker container top <CONTAINER>
@@ -256,7 +262,7 @@
 
     这些进程运行在 Docker engine 的宿主机上
 
-29. ##### 创建 Docker 容器时背后发生了什么？
+30. ##### 创建 Docker 容器时背后发生了什么？
 
     比如执行下面命令
 
@@ -266,13 +272,13 @@
 
     ![container-back](/Users/ethereal/Documents/PersonalProject/NoteLibrary/images/container-back.svg)
 
-30. ##### 获取镜像的方式
+31. ##### 获取镜像的方式
 
     获取镜像常用的方式有三种，如下图
 
     <img src="/Users/ethereal/Documents/PersonalProject/NoteLibrary/images/getImage.png" alt="getImage" style="zoom:50%;" />
 
-31. ##### 拉取 docker 镜像的命令
+32. ##### 拉取 docker 镜像的命令
 
     ```bash
     docker image pull <ImageName>:<Tag>
@@ -280,31 +286,31 @@
 
     注意：如果没填写 `tag` 则默认拉取的是 `latest` 版本
 
-32. ##### 显示 docker 镜像详细信息的命令
+33. ##### 显示 docker 镜像详细信息的命令
 
     ```bash
     docker image inspect <IMAGE>
     ```
 
-33. ##### 导出 docker 镜像的命令
+34. ##### 导出 docker 镜像的命令
 
     ```bash
     docker image save <ImageName>:<Tag> -o <OutputImageFileName>
     ```
 
-34. ##### 导入 docker 镜像的命令
+35. ##### 导入 docker 镜像的命令
 
     ```bash
     docker image load -i <ImageFilePath>
     ```
 
-35. ##### 什么 Dockerfile？
+36. ##### 什么 Dockerfile？
 
     - Dockerfile 是用于构建 docker 镜像的文件
     - Dockerfile 里面包含了构建镜像所需的“指令”
     - Dockerfile 有其特定的语法规则
 
-36. ##### 构建 docker 镜像的命令
+37. ##### 构建 docker 镜像的命令
 
     ```bash
     docker image build -t <ImageName>:<Tag> -f <DockerFilePath> <构建上下文目录>
@@ -317,13 +323,13 @@
     - `-f` 后面必须跟的是一个 **Dockerfile 文件路径**，**不能是目录（比如 `.`）**
     - 如果不加 `-f`，则默认就是 `./Dockerfile`
 
-37. ##### 根据现有 docker 镜像，生成拥有新的 ImageName 和 Tag 的镜像的命令
+38. ##### 根据现有 docker 镜像，生成拥有新的 ImageName 和 Tag 的镜像的命令
 
     ```bash
     docker image tag <OriginalImageName>:<OriginalTag> <NewImageName>:<NewTag>
     ```
 
-38. ##### 登录 docker hub 的命令
+39. ##### 登录 docker hub 的命令
 
     ```bash
     docker login
@@ -331,25 +337,25 @@
 
     然后在命令行中输入 Username 和 Password
 
-39. 推送 docker 镜像到 docker hub 的命令
+40. 推送 docker 镜像到 docker hub 的命令
 
     ```bash
     docker image push <DockerAccount>/<ImageName>:<Tag>
     ```
 
-40. 将 docker container 提交成为一个新的 Image 的命令
+41. 将 docker container 提交成为一个新的 Image 的命令
 
     ```bash
     docker container commit <CONTAINER> <NewImageName>:<NewTag>
     ```
 
-41. 查看镜像层结构的命令
+42. 查看镜像层结构的命令
 
     ```bash
     docker image history <ImageName>
     ```
 
-42. Dockerfile 的语法
+43. Dockerfile 的语法
 
     1. 通过 `Form` 指定基础镜像
 
@@ -403,7 +409,7 @@
 
     6. 
 
-43. 请观看 4-5
+44. 请观看 4-5
 
     
 
